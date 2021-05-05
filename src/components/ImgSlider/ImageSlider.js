@@ -10,6 +10,7 @@ function ImageSlider() {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay:true,
   };
   return (
     <Carousel {...settings}>
@@ -33,10 +34,10 @@ const Carousel = styled(Slider)`
   .slick-list {
     overflow: visible;
   }
-  ul li button{
-      &:before{
-          font-size: 13px;
-      }
+  ul li button {
+    &:before {
+      font-size: 13px;
+    }
   }
   li.slick-active button::before {
     color: white;
@@ -46,11 +47,19 @@ const Carousel = styled(Slider)`
   }
 `;
 const Wrap = styled.div`
+  padding: 0 3px;
+  cursor: pointer;
   img {
-    border-radius: 5px;
-    border: 4px solid transparent;
+    border-radius: 8px;
+    border: 4px solid #161616;
+    box-sizing: border-box;
     height: 100%;
     width: 100%;
-    box-shadow: inset -12px -8px 40px black;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
+      rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+    transition: 0.2s ease-in-out;
+    &:hover {
+      border: 4px solid rgba(249, 249, 249, 0.8);
+    }
   }
 `;

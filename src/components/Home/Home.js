@@ -14,7 +14,8 @@ export default Home;
 
 const HomeContainer = styled.div`
   height: 91.9vh;
-  padding-top:2%;
+  padding-top: 1.5%;
+  overflow-x:hidden;
   background-color: gray;
   background: url("/images/home-background.png") center center / cover no-repeat
     fixed;
