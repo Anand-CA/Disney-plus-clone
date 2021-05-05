@@ -1,17 +1,27 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 function Header() {
   return (
     <HeaderContainer>
+      <Ham>
+        <img src="/ham.png" alt="" />
+      </Ham>
       {/* logo */}
       <HeaderLogo src="/images/logo.svg" alt="" />
 
       {/* nav menu  */}
       <HeaderMenu>
-        <li>
-          <img className="header__navIcon" src="/images/home-icon.svg" alt="" />
-          <span className="headerNavLink__text">home</span>
-        </li>
+        <Link to="/">
+          <li>
+            <img
+              className="header__navIcon"
+              src="/images/home-icon.svg"
+              alt=""
+            />
+            <span className="headerNavLink__text">home</span>
+          </li>
+        </Link>
 
         <li>
           <img
@@ -49,11 +59,27 @@ function Header() {
 
 export default Header;
 
+const Ham = styled.div`
+  display: none;
+  cursor: pointer;
+  img {
+    height: 30px;
+  }
+  @media (max-width: 600px) {
+    display: block;
+  }
+`;
+
 const HeaderContainer = styled.div`
   height: 70px;
-  background-color: #020207;
+  /* background-color: #020207; */
   display: flex;
+  overflow-x: hidden;
   align-items: center;
+  @media (max-width: 600px) {
+    justify-content: space-between;
+    padding: 0 15px;
+  }
 `;
 const HeaderLogo = styled.img`
   height: 50px;
@@ -61,7 +87,15 @@ const HeaderLogo = styled.img`
 `;
 const HeaderMenu = styled.div`
   display: flex;
-  flex: 1;
+  flex: 0.8;
+  @media (max-width: 600px) {
+    display: none;
+  }
+  a {
+    text-decoration: none;
+    color: white;
+    margin-right: 1%;
+  }
   li {
     cursor: pointer;
     display: flex;
@@ -74,7 +108,7 @@ const HeaderMenu = styled.div`
       text-transform: uppercase;
       letter-spacing: 1px;
       font-size: 14px;
-      margin-left:5px;
+      margin-left: 5px;
       font-weight: bolder;
       font-family: "Poppins", sans-serif;
       position: relative;
