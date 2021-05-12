@@ -1,35 +1,21 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useStateValue } from "../StateProvider";
 
 function Movies() {
+  const [{ movies }, dispatch] = useStateValue();
   return (
     <MoviesContainer>
-      <h3>Recommended</h3>
+      <h5>Recommended</h5>
       <Content>
-        <Wrap>
-          <img
-            src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/706C68FF1CEA5A9C2AE0608892C2DF79E4AC1F0DDB4BFF7FE6DAFC36DAFC0286/scale?width=400&aspectRatio=1.78&format=jpeg"
-            alt=""
-          />
-        </Wrap>
-        <Wrap>
-          <img
-            src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/C0A883EAB54DDDC924018D08CF4555EE72B3E9A8C214BDADF29CB82B5E2275D7/scale?width=400&aspectRatio=1.78&format=jpeg"
-            alt=""
-          />
-        </Wrap>
-        <Wrap>
-          <img
-            src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/341AE85B6C1423B9042B5F2E786645EE551B9D546C3D263B220A4727617FD2B8/badging?width=400&aspectRatio=1.78&format=jpeg&label=originals"
-            alt=""
-          />
-        </Wrap>
-        <Wrap>
-          <img
-            src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/CC08686E87BDB2D83A46C9608CB2F43018381A82608C380649351A00ED0D2919/badging?width=400&aspectRatio=1.78&format=jpeg&label=originals"
-            alt=""
-          />
-        </Wrap>
+        {movies?.map((movie) => (
+          <Wrap key={movie.id}>
+            <Link to={`/details/${movie.id}`}>
+              <img src={movie.movie.cardImg} alt="" />
+            </Link>
+          </Wrap>
+        ))}
       </Content>
     </MoviesContainer>
   );
@@ -40,13 +26,23 @@ export default Movies;
 const MoviesContainer = styled.div`
   margin: 30px 0;
   padding: 0 3%;
-  font-family: "Poppins", sans-serif;
+  h5 {
+    letter-spacing: 2px;
+    font-weight: bolder;
+    font-family: "Poppins", sans-serif;
+  }
 `;
 const Content = styled.div`
   margin-top: 2%;
   display: grid;
   grid-gap: 20px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  @media (max-width: 850px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 `;
 
 const Wrap = styled.div`

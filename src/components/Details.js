@@ -1,46 +1,71 @@
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useParams } from "react-router";
 import styled from "styled-components";
-
+import { db } from "../firebase";
+import Loading from "./Loading";
+import AddIcon from "@material-ui/icons/Add";
 function Details() {
-  return (
-    <DetailsContainer>
-      <Background>
-        <img src="https://wallpaperaccess.com/full/769774.jpg" alt="" />
-      </Background>
-      <TitleImage>
-        <img
-          src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D7AEE1F05D10FC37C873176AAA26F777FC1B71E7A6563F36C6B1B497CAB1CEC2/scale?width=1440&aspectRatio=1.78"
-          alt=""
-        />
-      </TitleImage>
+  const { id } = useParams();
+  const [movie, setMovie] = useState({});
+  const [loadingg, setloading] = useState(true);
+  useEffect(() => {
+    db.collection("movies")
+      .doc(id)
+      .get()
+      .then((doc) => {
+        setMovie(doc.data());
+      });
+  }, []);
 
-      <ButtonContainer>
-        <PlayButton>
-          <img src="/images/play-icon-black.png" alt="" />
-          <span>PLAY</span>
-        </PlayButton>
-        <TrailerButton>
-          <img src="/images/play-icon-white.png" alt="" />
-          <span>TRAILER</span>
-        </TrailerButton>
-        <AddButton>
-          <span>+</span>
-        </AddButton>
-        <GroupViewButton>
-          <img src="/images/group-icon.png" alt="" />
-        </GroupViewButton>
-      </ButtonContainer>
-      <Subtitle>
-        <p>2018 • 7m • Family, Fantasy, Kids, Animation</p>
-      </Subtitle>
-      <Description>
-        <p>
-          A Chinese mom who’s sad when her grown son leaves home gets another
-          chance at motherhood when one of her dumplings springs to life. But
-          she finds that nothing stays cute and small forever.
-        </p>
-      </Description>
-    </DetailsContainer>
+  useEffect(() => {
+    setTimeout(() => setloading(false), 1200);
+  }, []);
+  console.log("detail movie", movie);
+
+  const [loading, setLoading] = useState(true);
+
+  return (
+    <>
+      {!loadingg ? (
+        <DetailsContainer>
+          <Background>
+            <img src={movie.backgroundImg} alt="" />
+          </Background>
+          <Content>
+            <TitleImage>
+              <img src={movie.titleImg} alt="" />
+            </TitleImage>
+
+            <ButtonContainer>
+              <PlayButton>
+                <img src="/images/play-icon-black.png" alt="" />
+                <span>PLAY</span>
+              </PlayButton>
+              <TrailerButton>
+                <img src="/images/play-icon-white.png" alt="" />
+                <span>TRAILER</span>
+              </TrailerButton>
+              <AddButton>
+                <AddIcon />
+              </AddButton>
+              <GroupViewButton>
+                <img src="/images/group-icon.png" alt="" />
+              </GroupViewButton>
+            </ButtonContainer>
+            <Subtitle>
+              <p>{movie.subTitle}</p>
+            </Subtitle>
+          </Content>
+          <Description>
+            <p>{movie.description}</p>
+          </Description>
+        </DetailsContainer>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 }
 
@@ -65,10 +90,13 @@ const Background = styled.div`
     opacity: 0.7;
   }
 `;
-
+const Content = styled.div`
+  width: 60%;
+`;
 const TitleImage = styled.div`
-  height: 30vh;
-  width: 40vh;
+  max-width: 600px;
+  width: 60%;
+  margin-bottom: 10px;
   img {
     height: 100%;
     width: 100%;
@@ -129,7 +157,6 @@ const AddButton = styled.button`
   width: 50px;
   border: 2px solid white;
   span {
-    font-size: 5vh;
   }
 `;
 const GroupViewButton = styled.button`

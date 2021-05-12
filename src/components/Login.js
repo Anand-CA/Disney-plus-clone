@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { auth, provider } from "../firebase";
+import { useStateValue } from "../StateProvider";
 
 function Login() {
+  const [{}, dispatch] = useStateValue();
+
   return (
     <LoginContainer>
       <Wrapper>
@@ -27,9 +31,9 @@ function Login() {
 export default Login;
 
 const LoginContainer = styled.div`
-  height: 91.9vh;
+  height: calc(100vh - 70px);
   background-image: url("/images/login-background.jpg");
-  background-position: center;
+  background-position: top;
   background-size: cover;
   background-repeat: no-repeat;
   padding: 10rem 3% 0 3%;
